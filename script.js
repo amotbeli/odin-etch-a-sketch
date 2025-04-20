@@ -1,10 +1,38 @@
 function main() {
-  drawGrid();
+  setupResetButton();
+  drawGrid(n=16);
 }
 
-function drawGrid() {
-  const containerSize = 500;
-  const numberOfSquares = 16;
+function setupResetButton() {
+  const resetButton = document.querySelector("button");
+  resetButton.addEventListener("click", () => {
+    removeGrid();
+    let toContinue = "yes";
+    while (toContinue == "yes") {
+      const n = prompt("Number of Squares? (Max: 100)");
+      if (n>=1 && n<=100) {
+        toContinue = "no";
+        console.log("Working");
+        drawGrid(n);
+      }
+      else {
+        alert("Invalid input: It should be 1 to 100.")
+      }
+    }
+  });
+}
+
+function removeGrid() {
+  const container = document.querySelector(".container");
+  const cellsToRemove = container.querySelectorAll("div");
+  for (let i=0; i<cellsToRemove.length; i++) {
+    container.removeChild(cellsToRemove[i]);
+  }
+}
+
+function drawGrid(n) {
+  const containerSize = 960;
+  const numberOfSquares = n;
   const cellSize = containerSize/numberOfSquares;
 
   const container = document.querySelector(".container");
